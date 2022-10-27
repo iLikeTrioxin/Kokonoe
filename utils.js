@@ -22,7 +22,8 @@ async function callAPIAS(data, retry=true){
 
 			return callAPIAS(data, false);
 		});
-
+		console.log(data);
+		console.log(response);
 		return response;
 	});
 }
