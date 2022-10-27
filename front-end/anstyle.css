@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Rowdies:wght@300&display=swap');
+
+.episode:nth-child(2n){background-color: #242424;}
+.episode { margin-top: 3px; }
+
+body{
+  overflow: hidden;
+}
+
+#cover {
+  float: right;
+  flex:content;
+  height: 50%;
+  margin: 0 auto;
+}
+
+#middleSection{
+  display: flex;
+  width: 90%;
+  height: auto;
+  margin: 2% auto;
+}
+
+#desc{
+  padding: 5px;
+  float: left;
+  background-color: #242424;
+  width: 100%;
+  flex: auto;
+  margin-right: 2%;
+}
+
+#info div{
+  display: inline-block;
+  margin: 0 10px;
+}
+
+#info {
+  width: 90%;
+  height: auto;
+  margin: 1% auto;
+  text-align: center;
+  font-size: 1.2rem;
+  background-color: #242424;
+}
+
+#coverimg{
+  height: 100%;
+}
+
+#main-container {
+  width: 100%;
+  height: 95%;
+  margin-top:5vh;
+}
+
+#animeInfo {
+  align-content: center;
+  float: right;
+  width: 100%;
+  height: 100%;
+}
+
+#episodes{
+  float:left;
+  height: 100%;
+  width: 20%;
+}
+
+#playerContainer{
+  float: right;
+  width: 80%;
+  height: max(100%, 75vh);
+}
+
+#player{
+  width: 100%;
+  height: 75%;
+}
+#player iframe{
+  width: 100%;
+  height: 100%;
+}
+td button{
+  background:#3630a3;
+  color:white
+}
+#players::-webkit-scrollbar{
+  display: none;
+}
+#players{
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  overflow-y: scroll;
+  width: 100%;
+  height: 25%;
+}
+
+/* table style */
+tbody:nth-child(2n) { background-color: #242424; }
+td { text-align: center; }
+
+#players tr { margin-bottom: 5px; }
+#playerServers{
+  width: 100%;
+  height: 100%;
+}
+.episode{
+  width: 100%;
+  background-color: #141414;
+}
+
+:root {
+  --primary: #141414;
+  --light: #F3F3F3;
+  --dark: 	#686868;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--primary);
+  color: var(--light);
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+  line-height: 1.4;
+}
+
+
+*{
+  margin: 0;
+  border: 0;
+}
+
+h1 {
+  padding-left: 5%;
+  padding-top: 60px;  
+}
+
+.wrapper {
+  margin: 0;
+  padding: 0;
+}

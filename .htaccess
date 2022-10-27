@@ -1,0 +1,33 @@
+php_value display_errors 1
+
+RewriteEngine On
+
+# If there is file with size (-s) named like this, redirect to it
+RewriteCond %{REQUESTED_FILENAME} -s
+RewriteRule ^$ - [L]
+
+Redirect /index.html /signin
+
+# Redirect to html files existing in Front-end folder
+RewriteCond %{DOCUMENT_ROOT}/front\-end/$1.html -f
+RewriteRule ^(.+)$ front-end/$1.html [L]
+
+# Redirect search to explore page (it detects search by reading url)
+RewriteCond %{QUERY_STRING} ^q=(.+)$ [NC]
+RewriteRule ^search?$ front\-end/explore.html [NC,L]
+
+# Make anime requests prettier
+RewriteCond %{REQUEST_URI} ^(.*)anime/(.+) [NC]
+RewriteRule ^anime/(.+)$ front\-end/anime.html [NC,L]
+
+# redirect to API
+RewriteCond %{REQUEST_URI} ^(.*)API(.+) [NC]
+RewriteRule ^API(.+)$ back\-end/API$1 [NC,L]
+
+# redirect to front end resources
+RewriteCond %{DOCUMENT_ROOT}/front\-end/$1 -f
+RewriteRule ^(.*)$ front\-end/$1 [L]
+
+# redirect to back end resources
+RewriteCond %{DOCUMENT_ROOT}/$1 -f
+RewriteRule ^([.]*)$ $1 [L]

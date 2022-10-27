@@ -1,0 +1,57 @@
+<!-- <!DOCTYPE html> -->
+<html lang="en" >
+<head>
+  <script>if(localStorage['username']==null||localStorage['password']==null){window.location.href='./signin';}</script>
+  
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <title>Anime</title>
+
+  <link rel="stylesheet" href="/anstyle.css">
+  <link rel="stylesheet" href="/anstyleMobile.css">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="icon"       href="/resources/favicon.ico">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+  <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js" integrity="sha384-3LK/3kTpDE/Pkp8gTNp2gR/2gOiwQ6QaO7Td0zV76UFJVhqLl4Vl3KL1We6q6wR9" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div id="mainContainer">
+    <div id="episodes"></div>
+
+    <div id="playerContainer">
+      <div id="player">
+        <div id="animeInfo">
+          <div id="info">
+            <div>Title<br><a id="title"></a></div>
+            <div>Type<br><a id="type"></a></div>
+            <div>Episodes<br><a id="eps"></a></div>
+            <div>Score<br><a id="score"></a></div>
+          </div>
+          <div id="middleSection">
+            <div id="desc"><h2>Description</h2><a id="descText"></a></div>
+            <div id="cover"><img id="coverImg"></div>
+          </div>
+        </div>
+        <iframe id="playerFrame" hidden allowfullscreen></iframe>
+      </div>
+      <div id="players">
+        <table id="playerServers">
+          <tr>
+            <th>Server</th>
+            <th>Audio</th>
+            <th>Subs</th>
+            <th>Resolution</th>
+            <th></th>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="/../utils.js"></script>
+  <script src="/anime.js"></script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <script>if(localStorage['username']==null||localStorage['password']==null){window.location.href='./signin';}</script>
+  
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <title>Explore</title>
+
+  <link rel="stylesheet" href="/exstyle.css">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="icon"       href="/resources/favicon.ico">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+  <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js" integrity="sha384-3LK/3kTpDE/Pkp8gTNp2gR/2gOiwQ6QaO7Td0zV76UFJVhqLl4Vl3KL1We6q6wR9" crossorigin="anonymous"></script>
+</head>
+<body class="no-scrollbar">
+  <div class="wrapper">
+
+    <!-- HEADER -->
+    <header style="z-index: 1000;">
+      <div class="netflixLogo">Kokonoe</div>
+      <nav class="main-nav">
+        <a href="#home"  >Home</a>
+        <a href="#season">This season</a>
+        <a href="#recent">Recently added</a>
+      </nav>
+      <nav class="sub-nav">
+        <a id="search"  class="clickable">
+          <i class="fas fa-search sub-nav-logo"></i>
+          <input class="aa" type="text" id="searchInput" placeholder="Search" maxlength="60" style="opacity: 1; transition-duration: 300ms; display: none;">
+        </a>
+        <a id="notifs"  class="clickable"><i class="fas fa-bell sub-nav-logo"  ></i></a>
+        <a id="account" class="clickable">Account</a>
+        <div id="account-drop-down" class="account-drop-down">
+            <div id="logout" class="sub-menu-item clickable">logout</div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <section class="main-container">
+      <div class="location" id="home"></div>
+    </section>
+
+    <!-- LINKS -->
+    <section class="link">
+      <div class="logos">
+        <a href="#"><i class="fab fa-facebook-square fa-2x logo"></i></a>
+        <a href="#"><i class="fab fa-instagram fa-2x logo"></i></a>
+        <a href="#"><i class="fab fa-twitter fa-2x logo"></i></a>
+        <a href="#"><i class="fab fa-youtube fa-2x logo"></i></a>
+      </div>
+      <div class="sub-links">
+        <ul>
+          <li><a href="#">Audio and Subtitles</a></li>
+          <li><a href="#">Audio Description</a></li>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Gift Cards</a></li>
+          <li><a href="#">Media Center</a></li>
+          <li><a href="#">Investor Relations</a></li>
+          <li><a href="#">Jobs</a></li>
+          <li><a href="#">Terms of Use</a></li>
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Legal Notices</a></li>
+          <li><a href="#">Corporate Information</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+    </section>
+  </div>
+  <script src="/../utils.js"></script>
+  <script src="/explore.js"></script>
+</body>
+</html>
+
