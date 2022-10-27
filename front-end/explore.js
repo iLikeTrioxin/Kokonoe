@@ -154,7 +154,7 @@ function mainPage(){
     content.clear();
     var a = content.addCarousel("This season");
 
-    fetch("https://rin.yukiteru.xyz/API.php?method=getAnime").then(r => r.text()).then(r => {
+    fetch("/API.php?method=getAnime").then(r => r.text()).then(r => {
         r = JSON.parse(r)['result'];
         r.forEach(e => {
             a.addAnime(e['thumbnailUrl'], e['title'], '/anime/' + e['id']);
@@ -162,14 +162,14 @@ function mainPage(){
     });
 
     var b = content.addCarousel("Prequels");
-    fetch("https://rin.yukiteru.xyz/API.php?method=getAnime&offset=20").then(r => r.text()).then(r => {
+    fetch("/API.php?method=getAnime&offset=20").then(r => r.text()).then(r => {
         r = JSON.parse(r)['result'];
         console.log(r);
         r.forEach(element => { b.addAnime(element['thumbnailUrl'], element['title'], '/anime/' + element['id']); });
     });
 
     var c = content.addCarousel("xD");
-    fetch("https://rin.yukiteru.xyz/API.php?method=getAnime&offset=100").then(r => r.text()).then(r => {
+    fetch("/API.php?method=getAnime&offset=100").then(r => r.text()).then(r => {
         r = JSON.parse(r)['result'];
         console.log(r);
         r.forEach(element => { c.addAnime(element['thumbnailUrl'], element['title'], '/anime/' + element['id']); });
@@ -184,8 +184,8 @@ window.onpopstate = function(e){
 function search(title, newsite = true){
     home.innerHTML = "";
 
-    if(newsite) window.history.pushState   ({"pageTitle":`Search - ${title}`}, "", `//rin.yukiteru.xyz/search?q=${title}`);
-    else        window.history.replaceState({"pageTitle":`Search - ${title}`}, "", `//rin.yukiteru.xyz/search?q=${title}`);
+    if(newsite) window.history.pushState   ({"pageTitle":`Search - ${title}`}, "", `/search?q=${title}`);
+    else        window.history.replaceState({"pageTitle":`Search - ${title}`}, "", `/search?q=${title}`);
     document.title = "Search";
 
     content.clear();
