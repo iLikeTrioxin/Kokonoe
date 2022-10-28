@@ -35,11 +35,21 @@
             <div id="desc"><h2>Description</h2><a id="descText"></a></div>
             <div id="cover"><img id="coverImg"></div>
           </div>
+          <div id="bottomInfo">
+            <a class="sourceReference" href="//blank">
+              <img src="/resources/mal.png"><br>MyAnimeList
+            </a>
+            <a class="sourceReference" href="//blank">
+              <img src="/resources/shinden.png"><br>Shinden
+            </a>
+          </div>
         </div>
+        <div id="loading" class="hide"><img src="/resources/1.gif"></div>
         <iframe id="playerFrame" hidden allowfullscreen></iframe>
       </div>
       <div id="players">
-        <table id="playerServers">
+        <table>
+          </thead>
           <tr>
             <th>Server</th>
             <th>Audio</th>
@@ -47,6 +57,8 @@
             <th>Resolution</th>
             <th></th>
           </tr>
+          </thead>
+          <tbody id="playerServers"></tbody>
         </table>
       </div>
     </div>

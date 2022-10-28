@@ -2,6 +2,9 @@ const apiURL = '/API.php?';
 
 'use strict';
 
+function get   (s){ return document.querySelector   (s); }
+function getAll(s){ return document.querySelectorAll(s); }
+
 // return json
 async function postAsync(url, data=''){
     return fetch(url, {
@@ -22,8 +25,6 @@ async function callAPIAS(data, retry=true){
 
 			return callAPIAS(data, false);
 		});
-		console.log(data);
-		console.log(response);
 		return response;
 	});
 }
