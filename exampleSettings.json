@@ -1,0 +1,11 @@
+{
+  "researcherIp"   : "0.0.0.0",
+  "researcherPort" : 6003,
+  "shindenAccounts": [{
+    "login"   : "your@gmail.com",
+    "password": "123456"
+  }],
+  "kokonoeDbName"    : "Kokonoe",
+  "kokonoeDbUsername": "Kokonoe_User",
+  "kokonoeDbPassword": "123456"
+}

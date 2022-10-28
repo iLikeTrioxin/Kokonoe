@@ -1,17 +1,19 @@
 import asyncio
 import sys
+from json import loads
 
-sys.path.append(r"../..")
-
-from json import dumps, loads
+# Server
 from sanic import Sanic
-from sanic.response import json, html, text
+from sanic.response import json
 
-from mal import AnimeSearch, Anime
+# Scrapper utils
+from mal import AnimeSearch
 from shinden import Shinden
-from credentials import shindenPassword, shindenLogin
 
-app = Sanic(__name__)
+
+app      = Sanic(__name__)
+settings = None
+
 
 @app.route("/research", methods=['GET', 'POST'])
 async def research(request):
@@ -28,8 +30,8 @@ async def research(request):
     an = []
     for s in search.results:
         an.append({
-            "mal_id": s.mal_id,
-            "mal_url": s.url,
+            "malId": s.mal_id,
+            "malUrl": s.url,
             "title": s.title,
             "thumbnailUrl": s.image_url,
             "coverArtUrl": s.image_url,
@@ -41,6 +43,7 @@ async def research(request):
     
     return json(an)
 
+
 shinden = None
 async def initShinden(retry:bool = True):
     global shinden
@@ -50,9 +53,10 @@ async def initShinden(retry:bool = True):
         print("[*](initShinden) destroying previous session")
         await shinden.close()
 
-    shinden = Shinden("https://fileblackhole.000webhostapp.com/API.php")
+    shinden = Shinden(settings['researcher']['shinden']['proxies'][0])
 
-    token = await shinden.login(shindenLogin, shindenPassword)
+    account = settings['researcher']['shinden']['accounts'][0]
+    token = await shinden.login(account['username'], account['password'])
 
     if len(token) != 64 and retry:
         print("[!](initShinden) resulting token not valid. retrying...")
@@ -60,6 +64,7 @@ async def initShinden(retry:bool = True):
     
     print("[*](initShinden) Setting token to " + token)
     return token
+
 
 @app.route("/search", methods=['GET', 'POST'])
 async def search(request):
@@ -81,13 +86,12 @@ async def search(request):
     for pr in result:
         if pr['title'] == title: cr = result.index(pr)
 
-    print(result[0])
-    print(result[cr])
     tmp = result[0 ]
     result[0 ] = result[cr]
     result[cr] = tmp
 
     return json(result)
+
 
 @app.route("/getepisodes", methods=['GET', 'POST'])
 async def getEpisodes(request):
@@ -102,6 +106,7 @@ async def getEpisodes(request):
 
     return json(episodes)
 
+
 @app.route("/getepisodeplayers", methods=['GET', 'POST'])
 async def getEpisodePlayers(request):
     global shinden
@@ -113,6 +118,7 @@ async def getEpisodePlayers(request):
     players = await shinden.getEpisodePlayers(url)
 
     return json(players)
+
 
 @app.route("/getplayer", methods=['GET', 'POST'])
 async def getplayer(request):
@@ -158,15 +164,10 @@ async def researchDeep(request):
 
 
 if __name__ == "__main__":
-    settings = {
-        "researcherIp": "0.0.0.0",
-        "researcherPort": 6002
-    }
-
     with open("../../settings.json", "r") as f:
         settings = loads(f.read())
 
     app.run(
-        host=settings['researcherIp'],
-        port=settings['researcherPort']
+        host=settings['researcher']['ip'],
+        port=settings['researcher']['port']
     )

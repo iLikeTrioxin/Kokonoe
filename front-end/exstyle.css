@@ -12,6 +12,7 @@
     text-align: center;
     z-index: 999;
 }
+
 /* 
 #search {
   display: inline-flex;
@@ -64,14 +65,14 @@ div.items {
     margin: 0 3px;
     transition: all 0.3s ease-in-out;
     cursor: pointer;
-    background-color: #ff0000;
+    background-color: #242424;
     z-index: 99;
 }
 
 .item .item-load-icon {
     left: 50%;
     top: 50%;
-    background-color: #ff0000;
+    background-color: #242424;
     transform: translate(-50%, -50%);
 }
 .item .opacity-none {
@@ -80,7 +81,7 @@ div.items {
 .item img.item-image {
     width: 200px;
     height: 350px;
-    background-color: #ff0000;
+    background-color: #242424;
     -o-object-fit: cover;
     object-fit: cover;
 }
