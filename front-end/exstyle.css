@@ -12,6 +12,20 @@
     text-align: center;
     z-index: 999;
 }
+
+body::-webkit-scrollbar {
+    width: 12px;               /* width of the entire scrollbar */
+}
+  
+body::-webkit-scrollbar-track {
+    background: #141414;        /* color of the tracking area */
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: #242424;    /* color of the scroll thumb */
+    border-radius: 20px;       /* roundness of the scroll thumb */
+    border: 3px solid #141414;  /* creates padding around scroll thumb */
+}
 /* 
 #search {
   display: inline-flex;
@@ -64,14 +78,14 @@ div.items {
     margin: 0 3px;
     transition: all 0.3s ease-in-out;
     cursor: pointer;
-    background-color: #ff0000;
+    background-color: #242424;
     z-index: 99;
 }
 
 .item .item-load-icon {
     left: 50%;
     top: 50%;
-    background-color: #ff0000;
+    background-color: #242424;
     transform: translate(-50%, -50%);
 }
 .item .opacity-none {
@@ -80,7 +94,7 @@ div.items {
 .item img.item-image {
     width: 200px;
     height: 350px;
-    background-color: #ff0000;
+    background-color: #242424;
     -o-object-fit: cover;
     object-fit: cover;
 }

@@ -28,11 +28,9 @@ function displayEpisode(url){
 
 callAPIAS(`method=getanimebyid&id=${id}`).then(r => {
     let eps = r['result']['episodesCount'];
-    for(let i = 0; i < eps; i++){
-        console.log(i);
-        episodes.innerHTML += `<div style="opacity: ${(eps-i-1)/eps}" class="episode">1</div>`;
     
-    }
+    for(let i = 0; i < eps; i++)
+        episodes.innerHTML += `<div style="opacity: ${(eps-i-1)/eps}" class="episode"></div>`;
 
     document.getElementById("coverImg").src       = r['result']['coverArtUrl'];
     document.getElementById("descText").innerText = r['result']['description'];
