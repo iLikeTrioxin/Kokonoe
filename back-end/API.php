@@ -25,13 +25,16 @@ session_start();
 //      7 - Session expired
 //      8 - Bad request
 
-include('../credentials.php');
-include('./utils.php');
+include('utils.php');
 
 $settings = file_get_contents('../settings.json');
 $settings = json_decode($settings, true);
 
-$MySQLDatabase = new mysqli('localhost', $MySQLuser, $MySQLpassword, $MySQLdbname);
+$MySQLDatabase = new mysqli('localhost',
+    $settings['kokonoe']['dbUsername'],
+    $settings['kokonoe']['dbPassword'],
+    $settings['kokonoe']['dbName']
+);
 
 if( $MySQLDatabase->connect_errno ) returnResult('Something went wrong, try again later.', 1);
 
@@ -39,8 +42,8 @@ if( $MySQLDatabase->connect_errno ) returnResult('Something went wrong, try agai
 function researcher(string $query){
     global $settings;
     
-    $ip   = $settings['researcherIp'];
-    $port = $settings['researcherPort'];
+    $ip   = $settings['researcher']['ip'];
+    $port = $settings['researcher']['port'];
     
     $response = post("http://${ip}:${port}/${query}");
     
@@ -215,8 +218,8 @@ function post(string $url, array $data=[]): ?string {
 function addAnimeTitle($anime){
     global $MySQLDatabase;
 
-    $sql = $MySQLDatabase->prepare("SELECT * FROM `anime` WHERE `title` = ? AND `type` = ?;");
-    $sql->bind_param('ss', $anime['title'], $anime['type']);
+    $sql = $MySQLDatabase->prepare("SELECT * FROM `anime` WHERE `malId` = ?;");
+    $sql->bind_param('i', $anime['malId']);
     
     $row = array();
     $sql->bind_result(
@@ -229,7 +232,8 @@ function addAnimeTitle($anime){
         $row['episodesCount'],
         $row['type'],
         $row['shindenId'],
-        $row['malRating']
+        $row['malRating'],
+        $row['malId']
     );
 
     $sql->execute();
@@ -240,8 +244,17 @@ function addAnimeTitle($anime){
         return $row;
     }
 
-    $sql = $MySQLDatabase->prepare("INSERT INTO `anime`(`title`, `description`, `coverArtUrl`, `thumbnailUrl`, `episodesCount`, `type`, `malRating`) VALUES (?,?,?,?,?,?,?);");
-    $sql->bind_param('ssssiss', $anime['title'], $anime['description'], $anime['coverArtUrl'], $anime['thumbnailUrl'], $anime['episodesCount'], $anime['type'], $anime['malRating']);
+    $sql = $MySQLDatabase->prepare("INSERT INTO `anime`(`title`, `description`, `coverArtUrl`, `thumbnailUrl`, `episodesCount`, `type`, `malRating`, `malId`) VALUES (?,?,?,?,?,?,?,?);");
+    $sql->bind_param('ssssissi',
+        $anime['title'],
+        $anime['description'],
+        $anime['coverArtUrl'],
+        $anime['thumbnailUrl'],
+        $anime['episodesCount'],
+        $anime['type'],
+        $anime['malRating'],
+        $anime['malId']
+    );
     $sql->execute();
 
     $anime['id'] = $sql->insert_id;
@@ -278,7 +291,7 @@ function getNameProposals(array &$result, string $hint, int $limit=20): int {
         while($row = $response->fetch_assoc()){
             $exists = false;
 
-            foreach($result as $r) { if($r['title'] == $row['title']) {$exists = true;} }
+            foreach($result as $r) { if($r['malId'] == $row['malId']) {$exists = true;} }
             if (!$exists) { array_push($result, $row); }
         }
     }
@@ -534,19 +547,19 @@ function getAnimeById(int $id){
 function getShindenId(array $anime){
     global $MySQLDatabase;
 
-    if(strlen($anime['shindenId'])) return $anime['shindenId'];
+    if($anime['shindenId'] != 0) return $anime['shindenId'];
 
-    $url = researcher(
+    $shindenId = researcher(
         "search?title=" . urlencode($anime['title']) .
         "&options=" . json_encode(array("type" => $anime['type'], "maxEps" => $anime['episodesCount'], "minEps" => $anime['episodesCount']))
-    )[0]['url'];
+    )[0]['id'];
     $id  = $anime['id'];
 
-    $sql = "UPDATE `anime` SET `shindenId` = '$url' WHERE `id` = '$id';";
+    $sql = "UPDATE `anime` SET `shindenId` = '$shindenId' WHERE `id` = '$id';";
 
     if( !( $MySQLDatabase->query($sql) ) ) return null;
 
-    return $url;
+    return $shindenId;
 }
 
 //-------------------------------\
@@ -592,10 +605,12 @@ switch($cp){
     case 'getanimeepisodes': {
         $id = (int) requiredField('id');
 
-        $anime     = getAnimeById($id);
-        $shindenId = getShindenId($anime);
+        $result = getAnimeById($id);
+        $result['shindenId'] = getShindenId($result);
+        
+        $result['episodes'] = researcher("getepisodes?url=" . $result['shindenId']);
 
-        returnResult(researcher("getepisodes?url=" . urlencode($shindenId)));
+        returnResult($result);
         
         break;
     }

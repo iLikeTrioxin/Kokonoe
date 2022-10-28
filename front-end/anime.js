@@ -47,6 +47,10 @@ callAPIAS(`method=getanimebyid&id=${id}`).then(r => {
     for(let i = 0; i < eps; i++)
         episodes.innerHTML += `<div style="opacity: ${(eps-i-1)/eps}" class="episode alternate"></div>`;
 
+
+    get("#mal").classList.remove("hide");
+    get("#mal").href = "//myanimelist.net/anime/" + r['result']['malId'];
+    
     get("#coverImg").src       = r['result']['coverArtUrl'];
     get("#descText").innerText = r['result']['description'];
 
@@ -56,12 +60,15 @@ callAPIAS(`method=getanimebyid&id=${id}`).then(r => {
     get("#score").innerText = r['result']['malRating'];
 }).then(r => {
 callAPIAS(`method=getanimeepisodes&id=${id}`).then(r => {
-    animeData = r['result'];
+    animeData = r['result']['episodes'];
     episodes.innerHTML = "";
     for(let i = animeData.length - 1; i >= 0 ; i--){
         let ep = animeData[i];
         let node = document.createElement('div');
-        
+ 
+        get("#shinden").classList.remove("hide");
+        get("#shinden").href = "//shinden.pl/series/" + r['result']['shindenId'];
+
         node.classList.add("clickable");
         node.classList.add("alternate");
         node.classList.add("episode");
